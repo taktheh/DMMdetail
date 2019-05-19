@@ -1,0 +1,2 @@
+# DMMdetail
+DMMdetail user script
