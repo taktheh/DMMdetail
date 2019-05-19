@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  display a detail window on mouse over
 // @author       Takamaro the Hentai
-// @match        https://www.dmm.com/*/list/*
+// @downloadURL  https://github.com/taktheh/DMMdetail/raw/master/DMMdetail.user.js
 // @match        https://www.dmm.co.jp/*/list/*
 // @grant        none
 // ==/UserScript==
