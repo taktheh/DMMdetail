@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DMMdetail
 // @namespace    https://github.com/taktheh/DMMdetail
-// @version      0.1
+// @version      0.1.1
 // @description  display a detail window on mouse over
 // @author       Takamaro the Hentai
 // @downloadURL  https://github.com/taktheh/DMMdetail/raw/master/DMMdetail.user.js
