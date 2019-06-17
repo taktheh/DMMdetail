@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name         DMMdetail
 // @namespace    https://github.com/taktheh/DMMdetail
-// @version      0.3
+// @version      0.4
 // @description  display a detail window on mouse over
 // @author       Takamaro the Hentai
 // @downloadURL  https://github.com/taktheh/DMMdetail/raw/master/DMMdetail.user.js
 // @match        https://www.dmm.com/*/list/*
 // @match        https://www.dmm.co.jp/*/list/*
+// @match        https://www.dmm.co.jp/search/*
 // @grant        none
 // ==/UserScript==
 
@@ -45,27 +46,29 @@
         var rect = this.getBoundingClientRect();
         var src = this.getElementsByTagName("a")[0].href;
         var timeoutID = window.setTimeout(() => {
-            var popup = document.getElementById(idName);
-            if (popup.src === src) {
-                display_popup(popup, rect);
+            var top = document.getElementById(idName);
+            if (top.src === src) {
+                display_popup(top.firstChild, rect);
             } else {
                 load(src, (e) => {
+                    var popup = document.createElement("div");
                     var styles = e.getElementsByTagName("style");
+                    var style = document.createElement("style");
                     for (var i = 0; i < styles.length; i++) {
                         popup.appendChild(styles[i]);
                     }
-                    var style = document.createElement("style");
                     popup.appendChild(style);
                     style.textContent =
                         '.page-detail>table>tbody>tr>td:nth-child(n+2)' +
                         '{ display: none }';
                     popup.appendChild(e.getElementById("mu"));
+                    top.appendChild(popup);
                     display_popup(popup, rect);
                 });
-                while (popup.firstChild) {
-                    popup.removeChild(popup.firstChild);
+                if (top.firstChild) {
+                    top.removeChild(top.firstChild);
                 }
-                popup.src = src;
+                top.src = src;
             }
         }, wait);
         this.onmouseout = function() {
@@ -77,11 +80,12 @@
         var style = document.createElement("style");
         document.head.appendChild(style);
         style.sheet.insertRule(
-            '#' + idName + ' {' +
+            '#' + idName + '>div {' +
                 'position: absolute;' +
                 'z-index: 32767;' +
                 'width: 50vw;' +
-                'height: 80vh;' +
+                'height: 60vh;' +
+                'min-height: 10lh;' +
                 'overflow: scroll;' +
                 'background: #FFFFFF;' +
                 'border: 1px #ccc solid;' +
@@ -95,7 +99,7 @@
         if (list) {
             var div = document.createElement("div");
             div.id = idName;
-            div.style.display = "none";
+//            div.style.display = "none";
             document.body.appendChild(div);
 
             var tmb = list.getElementsByClassName('tmb');
